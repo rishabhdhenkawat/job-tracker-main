@@ -1,0 +1,46 @@
+{   
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "essential": true,
+            "image": "mongo:3.0.2",
+            "name": "db",
+            "memory":500
+        },
+        {
+            "command": [
+                "python3",
+                "-u",
+                "app.py"
+            ],
+            "essential": true,
+            "links": [
+                "db"
+            ],
+            "mountPoints": [
+                {
+                    "containerPath": "/todo",
+                    "sourceVolume": "_"
+                }
+            ],
+            "name": "web",
+            "image": "rdhenkawat/jt",
+            "memory": 500,
+            "portMappings": [
+                {
+                    "containerPort": 5000,
+                    "hostPort": 5000
+                }
+            ]
+        }
+    ],
+    "family": "",
+    "volumes": [
+        {
+            "host": {
+                "sourcePath": "."
+            },
+            "name": "_"
+        }
+    ]
+}
